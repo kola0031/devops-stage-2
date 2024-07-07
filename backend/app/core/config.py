@@ -13,6 +13,8 @@ from pydantic import (
 from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing_extensions import Self
+from dotenv import load_dotenv
+import os
 
 
 def parse_cors(v: Any) -> list[str] | str:
@@ -46,13 +48,17 @@ class Settings(BaseSettings):
         list[AnyUrl] | str, BeforeValidator(parse_cors)
     ] = []
 
+    load_dotenv(os.getenv('ENV_FILE_LOCATION', '.env'))
+
     PROJECT_NAME: str
     SENTRY_DSN: HttpUrl | None = None
     POSTGRES_SERVER: str
     POSTGRES_PORT: int = 5432
-    POSTGRES_USER: str
-    POSTGRES_PASSWORD: str
-    POSTGRES_DB: str = ""
+    POSTGRES_USER: str = "devops"
+    POSTGRES_PASSWORD: str= "devops123"
+    POSTGRES_DB: str = "app"
+
+    settings = settings()
 
     @computed_field  # type: ignore[misc]
     @property
