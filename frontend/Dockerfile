@@ -1,22 +1,17 @@
-FROM node:20 
+FROM node:14-alpine
 
 WORKDIR /app
 
-COPY package*.json /app/
+COPY package.json .
 
 RUN npm install
 
-COPY ./ /app/
+RUN npm i -g serve
 
-ARG VITE_API_URL=${VITE_API_URL}
+COPY . .
 
 RUN npm run build
 
+EXPOSE 3000
 
-
-FROM nginx:1
-
-COPY --from=build-stage /app/dist/ /usr/share/nginx/html
-
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-COPY ./nginx-backend-not-found.conf /etc/nginx/extra-conf.d/backend-not-found.conf
+CMD [ "serve", "-s", "dist" ]
