@@ -20,7 +20,7 @@ services:
       - DATABASE_URL=postgresql://user:password@db:5432/dbname
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`yourdomain.com`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.backend.rule=Host(`taofiqkolawole.net`) && PathPrefix(`/api`)"
       - "traefik.http.services.backend.loadbalancer.server.port=8000"
   
   db:
@@ -42,7 +42,7 @@ services:
       - web
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.adminer.rule=Host(`db.yourdomain.com`)"
+      - "traefik.http.routers.adminer.rule=Host(`db.taofiqkolawole.net`)"
       - "traefik.http.services.adminer.loadbalancer.server.port=8080"
   
   traefik:
